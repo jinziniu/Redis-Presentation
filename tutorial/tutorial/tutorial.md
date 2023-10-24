@@ -77,7 +77,9 @@ sudo yum install redis
 
 (To install Redis directly)
 
-![EPEL](img\EPEL.png)
+<img src="img\EPEL.png">
+
+
 
 redis1
 
