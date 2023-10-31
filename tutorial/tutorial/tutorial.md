@@ -32,7 +32,7 @@
 
    3.3 Redis master-slave replication 
 
-   3.4 Redis Geospacial
+   3.4
 
    **Reference**
 
@@ -77,9 +77,9 @@ sudo yum install redis
 
 (To install Redis directly)
 
+
+
 <img src="img\EPEL.png">
-
-
 
 redis1
 
@@ -118,7 +118,7 @@ Once Redis is started, you should be able to use it as normal.
 
 <img src="img\start2.png" style="zoom: 33%;" />
 
-![](img\successful.png)
+<img src="img\successful.png">
 
 **The second** method is to use Docker to download Redis and create a container to enable Windows to use the Redis service:
 
@@ -134,7 +134,9 @@ Next, start the Docker service and then start the Redis container to use it. In 
 docker run -d --name my-redis-container -p 6379:6379 redis
 ```
 
-![](img\docker1.png)
+<img src="img\docker1.png">
+
+
 
 <img src="img\docker2.png" style="zoom: 33%;" />
 
@@ -144,7 +146,9 @@ You can see that Redis is already in a running state. Next, you can follow all t
 
 RedisInsight can visualize and optimize Redis data. It is a powerful desktop manager that offers an intuitive and efficient UI for Redis and supports a range of operations, including CRUD, in a feature-rich client.
 
-![](img\redisinsight2.png)
+<img src="img\redisinsight2.png">
+
+
 
 In the website's graphical interface, you can select the operating system to download RedisInsight. When using it, as mentioned in step 1.2, you should first start the Redis service and then open RedisInsight to establish a connection.
 
@@ -276,20 +280,28 @@ Redis has a unique publish/subscribe (Pub/Sub) mechanism that allows one or more
 Here's how you can demonstrate this functionality:
 
 1. Open two Redis command-line clients (for this demonstration, we'll use Windows with a virtualized Ubuntu environment).
+
 2. In the first Redis command-line client, enter `SUBSCRIBE runoobChat`. This command subscribes to the "runoobChat" channel.
+
 3. In the second Redis command-line client, enter `PUBLISH runoobChat "Redis PUBLISH test"`. This command publishes a message to the "runoobChat" channel. At this point, the first Redis command-line client will receive the test message sent by the second Redis command-line client.[7]
 
-![](img\pub.png)
+   <img src="img\pub.png">
+
+
 
 This technology can have practical applications in real life. Let's consider a scenario:
 
 Imagine a business situation where, after customers place orders and make payments on a website, it is necessary to notify the inventory service for handling shipments. Later, if new services are introduced, such as a loyalty points program, which needs access to the results of order payments to increase user points, the situation becomes more complex. If only two services require access to order payment results, that's manageable, and software modifications can be made quickly. However, as the business continues to evolve, more and more new services may require access to order payment results. The consequence is that simply invoking a specific function becomes increasingly inefficient. When you make modifications to one aspect, other functionalities related to the same business logic also require adjustments. Furthermore, if there is an issue with one aspect of the business logic, it can potentially affect all functionalities.
 
-![](img\pay.png)
+<img src="img\pay.png">
+
+
 
 Redis provides a message mechanism based on the "publish/subscribe" pattern. In this mode, message publishers and subscribers do not need to communicate directly with each other.
 
-![](img\pubsub2.png)[8]
+<img src="img\pubsub2.png">
+
+[8]
 
 As shown in the diagram above, message publishers only need to publish messages to a specified channel, and every client subscribed to that channel will receive the message.
 
@@ -313,11 +325,13 @@ You can find detailed explanations and configuration options in the Redis config
 
 Based on the description above, you can customize the frequency of taking snapshots at fixed intervals, such as taking a snapshot every 3600 seconds:
 
-![](img\shot.png)
+<img src="img\shot.png">
 
 Of course, you can manually trigger a snapshot using the "save" command:
 
-![](img\dumb.png)
+<img src="img\dumb.png">
+
+
 
 "dumb.rdb" is the snapshot file.
 
@@ -327,44 +341,44 @@ Master-slave replication involves replicating data from one master server to mul
 
 To configure this, you need to adjust the configuration file. In your demonstration, you're using port 6380 on a virtual machine running Ubuntu in a Windows environment.
 
-![](img\conf1.png)
+<img src="img\conf1.png">
 
-
-
-![](img\port.png)
+<img src="img\port.png">
 
 change port to 6380
 
-![](img\pidfile.png)
+<img src="img\pidfile.png">
 
 Change the PID file name of the slave node to "redis_6380" to distinguish it from the master node.
 
-![](img\dbfile.png)
+<img src="img\dbfile.png">
 
 Change the slave node's dbfilename so that when the SAVE command is executed, the data on the slave node will be saved in this file.
 
-![](img\replicaof.png)
+<img src="img\replicaof.png">
 
 Specify the IP address and port number of the master node.
 
-![](img\copy.png)
+<img src="img\copy.png">
 
 As you can see, when the data in the master node at 6379 changes, the data in the slave node also changes in the same way, as depicted in the graph, showing the addition of two values, "haha" and "key."
 
 Many small and medium-sized enterprises do not yet use Redis clusters, but they typically implement master-slave replication. With master-slave replication, when the master server fails, operations can promote a slave server to take over, allowing services to continue running. Otherwise, if the master server needs data recovery and a restart, it could lead to a lengthy downtime, impacting the continuity of online services.
 
-![](img\copy2.jpg)[9]
+<img src="img\copy2.jpg">
+
+[9]
 
 **3.4 Redis Geospacial**
 
 In today's booming era of mobile internet, Location-Based Services (LBS) applications are proliferating. For relatively simple applications with small data scales, we can use database queries to find the nearest city. We can assume the user's current longitude is `u_longitude` and latitude is `u_latitude`. In such cases, database queries are an effective solution. However, when dealing with massive data scales, as in systems that cover restaurants across the entire UK like Just Eat, the performance issues of SQL queries become evident.
 The reason behind this is that the longitude and latitude fields in the database may involve functions that prevent the full utilization of indexes for query optimization, thus diminishing query performance. To achieve high-performance queries for geospatial data like this, Redis introduces the Geo data structure. With Geo, it becomes effortless to search for nearby locations within vast datasets.
 
-![](img\GEO.png)
+<img src="img\GEO.png">
 
 For example, here I added the city of Beijing based on longitude and latitude:
 
-![](img\GEO2.png)
+<img src="img\GEO2.png">
 
 You can continue to add data after the first set of longitude, latitude, and city, allowing you to store multiple sets of geographical coordinates and associated cities simultaneously:
 
@@ -372,12 +386,11 @@ You can continue to add data after the first set of longitude, latitude, and cit
 
 As you can see, we now have data for five cities, and we can perform a series of operations on them:
 
-![](img\GEO3.png)
+<img src="img\GEO3.png">
 
 You can query the longitude and latitude of a particular city, as shown in the example with Beijing's coordinates. When you have two or more city data entries, you can calculate the straight-line distance between them. In the example, we calculated the straight-line distance between Shanghai and Beijing, which is 1,067,597.9668 meters by default. You can, of course, change the unit by adding "KM" to the query to get the result in kilometers.
 But the utility of this feature goes beyond that. You can even search for other cities around a particular city, using it as a central point:
-
-![](img\GEO4.png)
+<img src="img\GEO4.png">
 
 In the example, a query was made for cities around Shanghai with a radius of 300 kilometers, and the result returned Hangzhou and Shanghai.
 
